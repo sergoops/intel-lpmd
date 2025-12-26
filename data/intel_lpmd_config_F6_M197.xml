@@ -11,6 +11,13 @@ Proxy WLT enabled with MTL specific epp values.
     <lp_mode_cpus />
 
     <!--
+		EPP to use in Low Power Mode
+		0-255: Valid EPP value to use in Low Power Mode
+		   -1: Don't change EPP in Low Power Mode
+	-->
+	<lp_mode_epp>-1</lp_mode_epp>
+
+    <!--
         Mode values
         0: Cgroup v2
         1: Cgroup v2 isolate
@@ -54,14 +61,14 @@ Proxy WLT enabled with MTL specific epp values.
         0 : No
         1 : Yes
     -->
-    <WLTHintEnable>1</WLTHintEnable>
+    <WLTHintEnable>0</WLTHintEnable>
 
     <!--
         Use WLT software proxy hints
         0 : No
         1 : Yes
     -->
-    <WLTProxyEnable>1</WLTProxyEnable>
+    <WLTProxyEnable>0</WLTProxyEnable>
 
     <!--
         Use HFI SUV hints
@@ -75,14 +82,14 @@ Proxy WLT enabled with MTL specific epp values.
         from 0 - 100
         clear both util_entry_threshold and util_exit_threshold to disable util monitor
     -->
-    <util_entry_threshold />
+    <util_entry_threshold>10</util_entry_threshold>
 
     <!--
         System utilization threshold to exit LP mode
         from 0 - 100
         clear both util_entry_threshold and util_exit_threshold to disable util monitor
     -->
-    <util_exit_threshold />
+    <util_exit_threshold>95</util_exit_threshold>
 
     <!--
         Entry delay. Minimum delay in non Low Power mode to
@@ -116,49 +123,51 @@ Proxy WLT enabled with MTL specific epp values.
     <IgnoreITMT>0</IgnoreITMT>
 
     <States>
-        <CPUFamily> 6 </CPUFamily>
-        <CPUModel> 197 </CPUModel>
-        <CPUConfig> * </CPUConfig>
-    <State>
-        <ID> 1 </ID> <!-- no significance. number can be anything -->
-        <Name> WLT_IDLE </Name>
-        <WLTType> 0 </WLTType> <!-- WLTType mapped to Name -->
-        <EPP> 255 </EPP>
-        <EPB> 15 </EPB>
-        <MinPollInterval>2000</MinPollInterval>
-        <ITMTState> -1 </ITMTState>
-        <IRQMigrate> -1 </IRQMigrate>
-    </State>
-    <State>
-        <ID> 2 </ID>
-        <Name> WLT_BATTERY_LIFE </Name>
-        <WLTType> 1 </WLTType>
-        <EPP> 178 </EPP>
-        <EPB> 6 </EPB>
-        <MinPollInterval>2000</MinPollInterval>
-        <ITMTState> -1 </ITMTState>
-        <IRQMigrate> -1 </IRQMigrate>
-    </State>
-    <State>
-        <ID> 3 </ID>
-        <Name> WLT_SUSTAINED </Name>
-        <WLTType> 2 </WLTType>
-        <EPP> 64 </EPP>
-        <EPB> 6 </EPB>
-        <MinPollInterval>2000</MinPollInterval>
-        <ITMTState> -1 </ITMTState>
-        <IRQMigrate> -1 </IRQMigrate>
-    </State>
-    <State>
-        <ID> 4 </ID>
-        <Name> WLT_BURSTY </Name>
-        <WLTType> 3 </WLTType>
-        <EPP> 64 </EPP>
-        <EPB> 4 </EPB>
-        <MinPollInterval>2000</MinPollInterval>
-        <ITMTState> -1 </ITMTState>
-        <IRQMigrate> -1 </IRQMigrate>
-    </State>
-</States>
+		<CPUFamily> 6 </CPUFamily>
+		<CPUModel> 197 </CPUModel>
+		<CPUConfig> * </CPUConfig>
+		<State>
+			<ID> 1 </ID>
+			<Name> LPM_DEEP </Name>
+			<EntrySystemLoadThres> 2 </EntrySystemLoadThres>
+			<EnterCPULoadThres> 50 </EnterCPULoadThres>
+			<EPP> -1 </EPP>
+			<EPB> -1 </EPB>
+			<ITMTState> -1 </ITMTState>
+			<IRQMigrate> -1 </IRQMigrate>
+			<ActiveCPUs>12,13</ActiveCPUs>
+			<MinPollInterval> 500 </MinPollInterval>
+			<PollIntervalIncrement> 500 </PollIntervalIncrement>
+			<MaxPollInterval> 2000 </MaxPollInterval>
+		</State>
+		<State>
+			<ID> 2 </ID>
+			<Name> LPM_LOW </Name>
+			<EntrySystemLoadThres> 10 </EntrySystemLoadThres>
+			<ExitSystemLoadhysteresis> 3 </ExitSystemLoadhysteresis>
+			<EPP> -1 </EPP>
+			<EPB> -1 </EPB>
+			<ITMTState> -1 </ITMTState>
+			<IRQMigrate> -1 </IRQMigrate>
+			<ActiveCPUs>8,9,10,11</ActiveCPUs>
+			<MinPollInterval> 1000 </MinPollInterval>
+			<PollIntervalIncrement> 1000 </PollIntervalIncrement>
+			<MaxPollInterval> 3000 </MaxPollInterval>
+		</State>
+		<State>
+			<ID> 3 </ID>
+			<Name> FULL_POWER </Name>
+			<EntrySystemLoadThres />
+			<EnterCPULoadThres />
+			<EPP> -1 </EPP>
+			<EPB> -1 </EPB>
+			<ITMTState> -1 </ITMTState>
+			<IRQMigrate> -1 </IRQMigrate>
+			<ActiveCPUs>0-13</ActiveCPUs>
+			<MinPollInterval> 500 </MinPollInterval>
+			<PollIntervalIncrement> -1 </PollIntervalIncrement>
+			<MaxPollInterval> 2000 </MaxPollInterval>
+		</State>
+	</States>
 
 </Configuration>
