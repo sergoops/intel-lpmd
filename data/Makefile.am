@@ -31,6 +31,7 @@ lpmd_config_DATA = \
 	  intel_lpmd_config.xml \
 	  intel_lpmd_config_F6_M170.xml \
 	  intel_lpmd_config_F6_M189.xml \
+      intel_lpmd_config_F6_M197.xml \
 	  intel_lpmd_config_F6_M204.xml
 
 EXTRA_DIST = \

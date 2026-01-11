@@ -41,6 +41,7 @@ static struct cpu_model_entry id_table[] = {
 		{ 6, 0xaa }, // Meteorlake
 		{ 6, 0xac }, // Meteorlake
 		{ 6, 0xbd }, // Lunarlake
+		{ 6, 0xc5 }, // ArrowLake
 		{ 6, 0xcc }, // Pantherlake
 		{ 0, 0 } // Last Invalid entry
 };
@@ -295,7 +296,7 @@ int detect_max_cpus(void)
 	fclose (filep);
 
 	lpmd_log_debug ("\t%d CPUs supported in maximum\n", max_cpus);
-	
+
 	set_max_cpus(max_cpus);
 	return 0;
 }
